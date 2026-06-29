@@ -1,8 +1,22 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 import Cookies from 'js-cookie'
 
-// Empty baseURL → relative paths → Next.js rewrites proxy to backend (no CORS)
-// NEXT_PUBLIC_API_URL is still used by SignalR and server-side callers
+/**
+ * IMPORTANT: Configure NEXT_PUBLIC_API_URL in your environment:
+ * 
+ * Development: .env.development (default: https://localhost:5001)
+ * Production: Vercel Dashboard → Settings → Environment Variables
+ * 
+ * API calls will be made to the configured backend URL.
+ * See ENV_SETUP.md for complete setup instructions.
+ */
+
+// Log the configured API URL (safe to log - it's public)
+if (typeof window !== 'undefined') {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'relative paths (/api)';
+  console.log('API Base URL:', apiUrl);
+}
+
 export const apiClient: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || '',
   headers: { 'Content-Type': 'application/json' },
